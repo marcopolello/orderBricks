@@ -51,53 +51,60 @@ const JsonReader = () => {
     const newOrdineNum = parseInt(newOrdine);
     const newData = JSON.parse(JSON.stringify(jsonData));
 
-    // Funzione per trovare e aggiornare il mattone selezionato nei dati
-    const updateSelectedMattone = (data: any): boolean => {
-      if (Array.isArray(data)) {
-        for (let i = 0; i < data.length; i++) {
-          if (data[i].mattone === selectedMattone.mattone) {
-            // Trova il mattone con cui scambiare
-            const mattoneToSwap = findMattoneByOrdine(newData, newOrdineNum);
-            if (mattoneToSwap) {
-              // Scambia gli ordini
-              const tempOrdine = data[i].ordine;
-              data[i].ordine = newOrdineNum;
-              mattoneToSwap.ordine = tempOrdine;
-            } else {
-              data[i].ordine = newOrdineNum;
-            }
-            return true;
+    // Trova la sezione corrente del mattone selezionato
+    const findCurrentSection = (data: any): string | null => {
+      for (const [sectionName, sectionData] of Object.entries(data)) {
+        const findInArray = (arr: any[]): boolean => {
+          for (const item of arr) {
+            if (item.mattone === selectedMattone.mattone) return true;
+            if (item.figli && findInArray(item.figli)) return true;
           }
-          if (data[i].figli) {
-            const found = updateSelectedMattone(data[i].figli);
-            if (found) return true;
-          }
-        }
+          return false;
+        };
+        if (findInArray(sectionData as any[])) return sectionName;
       }
-      return false;
+      return null;
     };
 
-    // Funzione per trovare un mattone per ordine
-    const findMattoneByOrdine = (data: any, ordine: number): any => {
-      for (const section in data) {
-        const items = data[section];
-        for (const item of items) {
-          if (item.ordine === ordine) {
-            return item;
-          }
-          if (item.figli) {
-            const found = findMattoneByOrdine({ section: item.figli }, ordine);
-            if (found) return found;
-          }
+    const currentSection = findCurrentSection(newData);
+    if (!currentSection) return;
+
+    // Funzione per trovare un mattone per ordine nella sezione corrente
+    const findMattoneByOrdine = (data: any[], ordine: number): any => {
+      for (const item of data) {
+        if (item.ordine === ordine) return item;
+        if (item.figli) {
+          const found = findMattoneByOrdine(item.figli, ordine);
+          if (found) return found;
         }
       }
       return null;
     };
 
-    // Aggiorna i dati
-    Object.values(newData).forEach(section => {
-      updateSelectedMattone(section);
-    });
+    // Funzione per aggiornare il mattone selezionato
+    const updateSelectedMattone = (data: any[]): boolean => {
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].mattone === selectedMattone.mattone) {
+          const mattoneToSwap = findMattoneByOrdine(newData[currentSection] as any[], newOrdineNum);
+          if (mattoneToSwap) {
+            const tempOrdine = data[i].ordine;
+            data[i].ordine = newOrdineNum;
+            mattoneToSwap.ordine = tempOrdine;
+          } else {
+            data[i].ordine = newOrdineNum;
+          }
+          return true;
+        }
+        if (data[i].figli) {
+          const found = updateSelectedMattone(data[i].figli);
+          if (found) return true;
+        }
+      }
+      return false;
+    };
+
+    // Aggiorna i dati nella sezione corretta
+    updateSelectedMattone(newData[currentSection] as any[]);
 
     setJsonData(newData);
     setModalVisible(false);
