@@ -1,3 +1,4 @@
+import * as FileSystem from 'expo-file-system';
 import React, { useEffect, useState } from 'react';
 import { 
   View, 
@@ -282,6 +283,21 @@ const JsonReader = () => {
     );
   };
 
+  const handleExport = async () => {
+    if (!jsonData) return;
+    
+    try {
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+      const fileName = `ordine-mattoni-${timestamp}.json`;
+      const filePath = `${FileSystem.documentDirectory}${fileName}`;
+      
+      await FileSystem.writeAsStringAsync(filePath, JSON.stringify(jsonData, null, 2));
+      alert(`Configurazione esportata con successo in: ${fileName}`);
+    } catch (error) {
+      alert('Errore durante l\'esportazione: ' + error);
+    }
+  };
+
   if (!jsonData) {
     return <Text>Loading...</Text>;
   }
@@ -289,6 +305,14 @@ const JsonReader = () => {
   return (
     <>
       <ScrollView style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity 
+            style={styles.exportButton}
+            onPress={handleExport}
+          >
+            <Text style={styles.exportButtonText}>Esporta JSON</Text>
+          </TouchableOpacity>
+        </View>
         {renderSection('First Page', jsonData?.firstpage)}
         {renderSection('Pre Multipod', jsonData?.preMultipod)}
         {renderSection('Multipod', jsonData?.multipod)}
@@ -477,6 +501,22 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#666',
     fontWeight: '500',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+    paddingHorizontal: 10,
+  },
+  exportButton: {
+    backgroundColor: '#4CAF50',
+    padding: 10,
+    borderRadius: 5,
+  },
+  exportButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
 
