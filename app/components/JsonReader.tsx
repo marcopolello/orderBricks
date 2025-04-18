@@ -22,8 +22,8 @@ const COLORS = {
 const windowWidth = Dimensions.get('window').width;
 
 const SIZES = {
-  standalone: windowWidth / 2 - 20,
-  figlio: windowWidth / 2 - 20,
+  standalone: windowWidth - 40,
+  figlio: windowWidth / 2 - 60,
   contenitore: windowWidth - 40,
   'figlio-contenitore': windowWidth - 60,
 };
@@ -114,7 +114,68 @@ const JsonReader = () => {
 
   const renderMattone = (mattone: any, level: number = 0): JSX.Element => {
     const isContainer = mattone.tipo === 'contenitore' || mattone.tipo === 'figlio-contenitore';
-    const size = SIZES[mattone.tipo as keyof typeof SIZES] || windowWidth / 3;
+    let size = SIZES[mattone.tipo as keyof typeof SIZES] || windowWidth / 3;
+
+    // Gestione speciale per i figli di RecapitiContatti
+    if (mattone.tipo === 'figlio' && mattone.sezione && 
+        mattone.mattone.startsWith('FRContatti')) {
+      size = windowWidth / 3 - 50;
+    }
+
+    // Gestione speciale per il figlio-contenitore FRConsumi
+    if (mattone.tipo === 'figlio-contenitore' && mattone.sezione && 
+        mattone.mattone.startsWith('FRConsumi')) {
+        size = windowWidth / 2 - 60;
+    }
+
+    // Gestione speciale per i figli del figlio-contenitore FRConsumi
+    if (mattone.tipo === 'figlio' && mattone.sezione && 
+        mattone.mattone.startsWith('FRConsumoFatturato')) {
+        size = windowWidth / 3 - 30;
+    }
+    if (mattone.tipo === 'figlio' && mattone.sezione && 
+        mattone.mattone.startsWith('FRConsumoAnnuo')) {
+        size = windowWidth / 3 - 30;
+    }
+
+    if (mattone.mattone === 'CorpoInfoFR' && mattone.figli) {
+      return (
+        <View 
+          key={mattone.mattone} 
+          style={[
+            styles.mattoneSquare,
+            { 
+              backgroundColor: COLORS[mattone.tipo as keyof typeof COLORS] || '#FFA500',
+              width: size,
+              minHeight: isContainer ? size : size,
+              padding: isContainer ? 15 : 10,
+            }
+          ]}
+        >
+          <Text style={styles.mattoneName}>{mattone.mattone}</Text>
+          <View style={styles.propertyContainer}>
+            {mattone.tipo && <Text style={styles.property}>Tipo: {mattone.tipo}</Text>}
+            {mattone.sezione && <Text style={styles.property}>Sezione: {mattone.sezione}</Text>}
+            {mattone.ordine && <Text style={styles.property}>Ordine: {mattone.ordine}</Text>}
+          </View>
+
+          <View style={styles.corpoInfoContainer}>
+            <View style={styles.sezioneContainer}>
+              {mattone.figli
+                .filter((figlio: any) => figlio.sezione === "1")
+                .sort((a: any, b: any) => (a.ordine || 0) - (b.ordine || 0))
+                .map((figlio: any) => renderMattone(figlio, level + 1))}
+            </View>
+            <View style={styles.sezioneContainer}>
+              {mattone.figli
+                .filter((figlio: any) => figlio.sezione === "2")
+                .sort((a: any, b: any) => (a.ordine || 0) - (b.ordine || 0))
+                .map((figlio: any) => renderMattone(figlio, level + 1))}
+            </View>
+          </View>
+        </View>
+      );
+    }
 
     return (
       <Pressable 
@@ -354,7 +415,17 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
   },
-  
+  corpoInfoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginTop: 10,
+  },
+  sezioneContainer: {
+    flex: 1,
+    alignItems: 'center',
+    gap: 10,
+  },
 });
 
 export default JsonReader;
