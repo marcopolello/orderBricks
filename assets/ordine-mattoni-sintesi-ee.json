@@ -1,0 +1,151 @@
+{
+    "firstpage": [
+        {
+            "mattone": "FRServizio"
+        },
+        {
+            "mattone": "FRCliente"
+        },
+        {
+            "mattone": "CorpoInfoFR",
+            "tipo": "contenitore",
+            "figli": [
+                {
+                    "mattone": "FRFattura",
+                    "sezione": "1"
+                },
+                {
+                    "mattone": "FRPagamentoMetodo",
+                    "sezione": "1"
+                },
+                {
+                    "mattone": "FRPagamenti",
+                    "sezione": "1"
+                },
+                {
+                    "mattone": "FRCompetenze",
+                    "sezione": "1"
+                },
+                {
+                    "mattone": "FRConsumi",
+                    "sezione": "1",
+                    "tipo": "contenitore",
+                    "figli": [
+                        {
+                            "mattone": "FRConsumoFatturato",
+                            "sezione": "1"
+                        },
+                        {
+                            "mattone": "FRConsumoAnnuo",
+                            "sezione": "2"
+                        }
+                    ]
+                },
+                {
+                    "mattone": "FRTotale",
+                    "sezione": "2"
+                },
+                {
+                    "mattone": "FROfferta",
+                    "sezione": "2"
+                }
+            ]
+        },
+        {
+            "mattone": "RecapitiContatti",
+            "tipo": "contenitore",
+            "figli": [
+                {
+                    "mattone": "FRContattiGuasti",
+                    "sezione": "1"
+                },
+                {
+                    "mattone": "FRContattiReclami",
+                    "sezione": "2"
+                },
+                {
+                    "mattone": "FRContattiGenerico",
+                    "sezione": "3"
+                }
+            ]
+        },
+        {
+            "mattone": "FRVenditore"
+        }
+    ],
+    "preMultipod": [
+        {
+            "mattone": "ScontrinoEnergia",
+            "tipo": "contenitore",
+            "figli": [
+                {
+                    "mattone": "FSEAnagraficaPDP"
+                },
+                {
+                    "mattone": "SEImporti"
+                }
+            ]
+        },
+        {
+            "mattone": "BOOfferta"
+        }
+    ],
+    "multipod": [
+        {
+            "mattone": "Multipod",
+            "tipo": "contenitore",
+            "figli": [
+                {
+                "mattone": "EIInformativiEssenziali"
+                },
+                {
+                    "mattone": "LettureConsumi",
+                    "tipo": "contenitore",
+                    "figli": [
+                        {
+                            "mattone": "EIMisure"
+                        },
+                        {
+                            "mattone": "EIMisureMessaggi"
+                        }
+                    ]
+                },
+                {
+                    "mattone": "EIRicalcoli"
+                },
+                {
+                    "mattone": "EIStoricheBase"
+                },
+                {
+                    "mattone": "EIImposte"
+                },
+                {
+                    "mattone": "EIOneri"
+                }
+            ]
+        }
+    ],
+    "postMultipod" : [
+        {
+            "mattone": "EIPagamenti"
+        },
+        {
+            "mattone": "InformazioniConsumatore"
+        },
+        {
+            "mattone": "StrumentiTrasparenza"
+        },
+        {
+            "mattone": "EIMix"
+        },
+        {
+            "mattone": "EIInfoAutorita"
+        },
+        {
+            "mattone": "ObblighiInformativi"
+        },
+        {
+            "mattone": "Eccepibili"
+        }
+    ]
+}
