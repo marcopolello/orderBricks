@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   Pressable
 } from 'react-native';
+import * as Sharing from 'expo-sharing';
 import { MattoniStructure } from '../../types/mattoni';
 
 const COLORS = {
@@ -292,7 +293,15 @@ const JsonReader = () => {
       const filePath = `${FileSystem.documentDirectory}${fileName}`;
       
       await FileSystem.writeAsStringAsync(filePath, JSON.stringify(jsonData, null, 2));
-      alert(`Configurazione esportata con successo in: ${fileName}`);
+    
+      // Condividi il file
+      await Sharing.shareAsync(filePath, {
+        mimeType: 'application/json',
+        dialogTitle: 'Esporta configurazione mattoni'
+      });
+    
+      // Pulisci il file dopo la condivisione
+      await FileSystem.deleteAsync(filePath);
     } catch (error) {
       alert('Errore durante l\'esportazione: ' + error);
     }
