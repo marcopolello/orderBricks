@@ -33,6 +33,7 @@ const JsonReader = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedMattone, setSelectedMattone] = useState<any>(null);
   const [newOrdine, setNewOrdine] = useState('');
+  const [newSezione, setNewSezione] = useState('');
 
   useEffect(() => {
     const data: MattoniStructure = require('../../assets/ordine-mattoni-sintesi-ee.json');
@@ -42,6 +43,7 @@ const JsonReader = () => {
   const handleMattonePress = (mattone: any) => {
     setSelectedMattone(mattone);
     setNewOrdine(mattone.ordine.toString());
+    setNewSezione(mattone.sezione || '');
     setModalVisible(true);
   };
 
@@ -50,6 +52,21 @@ const JsonReader = () => {
 
     const newOrdineNum = parseInt(newOrdine);
     const newData = JSON.parse(JSON.stringify(jsonData));
+
+    const updateMattone = (data: any[]): boolean => {
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].mattone === selectedMattone.mattone) {
+          if (newOrdine) data[i].ordine = newOrdineNum;
+          if (newSezione && data[i].sezione) data[i].sezione = newSezione;
+          return true;
+        }
+        if (data[i].figli) {
+          const found = updateMattone(data[i].figli);
+          if (found) return true;
+        }
+      }
+      return false;
+    };
 
     // Trova la sezione corrente del mattone selezionato
     const findCurrentSection = (data: any): string | null => {
@@ -106,10 +123,16 @@ const JsonReader = () => {
     // Aggiorna i dati nella sezione corretta
     updateSelectedMattone(newData[currentSection] as any[]);
 
+    // Aggiorna i dati
+    Object.values(newData).forEach(section => {
+      updateMattone(section as any[]);
+    });
+
     setJsonData(newData);
     setModalVisible(false);
     setSelectedMattone(null);
     setNewOrdine('');
+    setNewSezione('');
   };
 
   const renderMattone = (mattone: any, level: number = 0): JSX.Element => {
@@ -140,6 +163,10 @@ const JsonReader = () => {
 
     if (mattone.mattone === 'CorpoInfoFR' && mattone.figli) {
       return (
+        <Pressable 
+          key={mattone.mattone}
+          onPress={() => handleMattonePress(mattone)}
+        >
         <View 
           key={mattone.mattone} 
           style={[
@@ -174,6 +201,7 @@ const JsonReader = () => {
             </View>
           </View>
         </View>
+        </Pressable>
       );
     }
 
@@ -275,9 +303,10 @@ const JsonReader = () => {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Modifica Ordine</Text>
+            <Text style={styles.modalTitle}>Modifica Mattone</Text>
             <Text style={styles.modalSubtitle}>{selectedMattone?.mattone}</Text>
-            
+
+            <Text style={styles.inputLabel}>Ordine</Text> 
             <TextInput
               style={styles.input}
               value={newOrdine}
@@ -286,10 +315,26 @@ const JsonReader = () => {
               placeholder="Nuovo ordine"
             />
 
+            {selectedMattone?.sezione && (
+              <>
+                <Text style={styles.inputLabel}>Sezione</Text>
+                <TextInput
+                  style={styles.input}
+                  value={newSezione}
+                  onChangeText={setNewSezione}
+                  placeholder="Nuova sezione (1 o 2)"
+                />
+              </>
+            )}
+
             <View style={styles.modalButtons}>
               <TouchableOpacity 
                 style={[styles.button, styles.buttonCancel]}
-                onPress={() => setModalVisible(false)}
+                onPress={() => {
+                  setModalVisible(false);
+                  setNewOrdine('');
+                  setNewSezione('');
+                }}
               >
                 <Text style={styles.buttonText}>Annulla</Text>
               </TouchableOpacity>
@@ -425,6 +470,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     gap: 10,
+  },
+  inputLabel: {
+    alignSelf: 'flex-start',
+    marginBottom: 5,
+    fontSize: 14,
+    color: '#666',
+    fontWeight: '500',
   },
 });
 
