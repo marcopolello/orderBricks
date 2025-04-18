@@ -2,39 +2,47 @@
     "firstpage": [
         {
             "mattone": "FRServizio",
-            "tipo": "standalone"
+            "tipo": "standalone",
+            "ordine": 1
         },
         {
             "mattone": "FRCliente",
-            "tipo": "standalone"
+            "tipo": "standalone",
+            "ordine": 2
         },
         {
             "mattone": "CorpoInfoFR",
             "tipo": "contenitore",
+            "ordine": 3,
             "figli": [
                 {
                     "mattone": "FRFattura",
                     "tipo": "figlio",
-                    "sezione": "1"
+                    "sezione": "1",
+                    "ordine": 1
                 },
                 {
                     "mattone": "FRPagamentoMetodo",
                     "tipo": "figlio",
-                    "sezione": "1"
+                    "sezione": "1",
+                    "ordine": 2
                 },
                 {
                     "mattone": "FRPagamenti",
                     "tipo": "figlio",
-                    "sezione": "1"
+                    "sezione": "1",
+                    "ordine": 3
                 },
                 {
                     "mattone": "FRCompetenze",
                     "tipo": "figlio",
-                    "sezione": "1"
+                    "sezione": "1",
+                    "ordine": 4
                 },
                 {
                     "mattone": "FRConsumi",
                     "sezione": "1",
+                    "ordine": 5,
                     "tipo": "figlio-contenitore",
                     "figli": [
                         {
@@ -52,18 +60,21 @@
                 {
                     "mattone": "FRTotale",
                     "tipo": "figlio",
-                    "sezione": "2"
+                    "sezione": "2",
+                    "ordine": 1
                 },
                 {
                     "mattone": "FROfferta",
                     "tipo": "figlio",
-                    "sezione": "2"
+                    "sezione": "2",
+                    "ordine": 2
                 }
             ]
         },
         {
             "mattone": "RecapitiContatti",
             "tipo": "contenitore",
+            "ordine": 4,
             "figli": [
                 {
                     "mattone": "FRContattiGuasti",
@@ -84,99 +95,120 @@
         },
         {
             "mattone": "FRVenditore",
-            "tipo": "standalone"
+            "tipo": "standalone",
+            "ordine": 5
         }
     ],
     "preMultipod": [
         {
             "mattone": "ScontrinoEnergia",
             "tipo": "contenitore",
+            "ordine": 1,
             "figli": [
                 {
                     "mattone": "FSEAnagraficaPDP",
-                    "tipo": "figlio"
+                    "tipo": "figlio",
+                    "ordine": 1
                 },
                 {
                     "mattone": "SEImporti",
-                    "tipo": "figlio"
+                    "tipo": "figlio",
+                    "ordine": 2
                 }
             ]
         },
         {
             "mattone": "BOOfferta",
-            "tipo": "standalone"
+            "tipo": "standalone",
+            "ordine": 2
         }
     ],
     "multipod": [
         {
             "mattone": "Multipod",
             "tipo": "contenitore",
+            "ordine": 1,
             "figli": [
                 {
-                "mattone": "EIInformativiEssenziali",
-                "tipo": "figlio"
+                    "mattone": "EIInformativiEssenziali",
+                    "tipo": "figlio",
+                    "ordine": 1
                 },
                 {
                     "mattone": "LettureConsumi",
                     "tipo": "figlio-contenitore",
+                    "ordine": 2,
                     "figli": [
                         {
                             "mattone": "EIMisure",
-                            "tipo": "figlio"
+                            "tipo": "figlio",
+                            "ordine": 1
                         },
                         {
                             "mattone": "EIMisureMessaggi",
-                            "tipo": "figlio"
+                            "tipo": "figlio",
+                            "ordine": 2
                         }
                     ]
                 },
                 {
                     "mattone": "EIRicalcoli",
-                    "tipo": "figlio"
+                    "tipo": "figlio",
+                    "ordine": 3
                 },
                 {
                     "mattone": "EIStoricheBase",
-                    "tipo": "figlio"
+                    "tipo": "figlio",
+                    "ordine": 4
                 },
                 {
                     "mattone": "EIImposte",
-                    "tipo": "figlio"
+                    "tipo": "figlio",
+                    "ordine": 5
                 },
                 {
                     "mattone": "EIOneri",
-                    "tipo": "figlio"
+                    "tipo": "figlio",
+                    "ordine": 6
                 }
             ]
         }
     ],
-    "postMultipod" : [
+    "postMultipod": [
         {
             "mattone": "EIPagamenti",
-            "tipo": "standalone"
+            "tipo": "standalone",
+            "ordine": 1
         },
         {
             "mattone": "InformazioniConsumatore",
-            "tipo": "standalone"
+            "tipo": "standalone",
+            "ordine": 2
         },
         {
             "mattone": "StrumentiTrasparenza",
-            "tipo": "standalone"
+            "tipo": "standalone",
+            "ordine": 3
         },
         {
             "mattone": "EIMix",
-            "tipo": "standalone"
+            "tipo": "standalone",
+            "ordine": 4
         },
         {
             "mattone": "EIInfoAutorita",
-            "tipo": "standalone"
+            "tipo": "standalone",
+            "ordine": 5
         },
         {
             "mattone": "ObblighiInformativi",
-            "tipo": "standalone"
+            "tipo": "standalone",
+            "ordine": 6
         },
         {
             "mattone": "Eccepibili",
-            "tipo": "standalone"
+            "tipo": "standalone",
+            "ordine": 7
         }
     ]
 }

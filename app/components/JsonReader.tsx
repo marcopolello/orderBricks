@@ -12,10 +12,10 @@ const COLORS = {
 const windowWidth = Dimensions.get('window').width;
 
 const SIZES = {
-  standalone: windowWidth / 5 - 20,
-  figlio: windowWidth / 5 - 20,
-  contenitore: windowWidth / 2 - 40,
-  'figlio-contenitore': windowWidth / 3 - 30,
+  standalone: windowWidth / 2 - 20,
+  figlio: windowWidth / 2 - 20,
+  contenitore: windowWidth - 40,
+  'figlio-contenitore': windowWidth - 60,
 };
 
 const JsonReader = () => {
@@ -50,6 +50,9 @@ const JsonReader = () => {
           )}
           {mattone.sezione && (
             <Text style={styles.property}>Sezione: {mattone.sezione}</Text>
+          )}
+          {mattone.ordine && (
+            <Text style={styles.property}>Ordine: {mattone.ordine}</Text>
           )}
         </View>
         
