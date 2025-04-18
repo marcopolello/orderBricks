@@ -1,10 +1,12 @@
 {
     "firstpage": [
         {
-            "mattone": "FRServizio"
+            "mattone": "FRServizio",
+            "tipo": "standalone"
         },
         {
-            "mattone": "FRCliente"
+            "mattone": "FRCliente",
+            "tipo": "standalone"
         },
         {
             "mattone": "CorpoInfoFR",
@@ -12,41 +14,49 @@
             "figli": [
                 {
                     "mattone": "FRFattura",
+                    "tipo": "figlio",
                     "sezione": "1"
                 },
                 {
                     "mattone": "FRPagamentoMetodo",
+                    "tipo": "figlio",
                     "sezione": "1"
                 },
                 {
                     "mattone": "FRPagamenti",
+                    "tipo": "figlio",
                     "sezione": "1"
                 },
                 {
                     "mattone": "FRCompetenze",
+                    "tipo": "figlio",
                     "sezione": "1"
                 },
                 {
                     "mattone": "FRConsumi",
                     "sezione": "1",
-                    "tipo": "contenitore",
+                    "tipo": "figlio-contenitore",
                     "figli": [
                         {
                             "mattone": "FRConsumoFatturato",
+                            "tipo": "figlio",
                             "sezione": "1"
                         },
                         {
                             "mattone": "FRConsumoAnnuo",
+                            "tipo": "figlio",
                             "sezione": "2"
                         }
                     ]
                 },
                 {
                     "mattone": "FRTotale",
+                    "tipo": "figlio",
                     "sezione": "2"
                 },
                 {
                     "mattone": "FROfferta",
+                    "tipo": "figlio",
                     "sezione": "2"
                 }
             ]
@@ -57,20 +67,24 @@
             "figli": [
                 {
                     "mattone": "FRContattiGuasti",
+                    "tipo": "figlio",
                     "sezione": "1"
                 },
                 {
                     "mattone": "FRContattiReclami",
+                    "tipo": "figlio",
                     "sezione": "2"
                 },
                 {
                     "mattone": "FRContattiGenerico",
+                    "tipo": "figlio",
                     "sezione": "3"
                 }
             ]
         },
         {
-            "mattone": "FRVenditore"
+            "mattone": "FRVenditore",
+            "tipo": "standalone"
         }
     ],
     "preMultipod": [
@@ -79,15 +93,18 @@
             "tipo": "contenitore",
             "figli": [
                 {
-                    "mattone": "FSEAnagraficaPDP"
+                    "mattone": "FSEAnagraficaPDP",
+                    "tipo": "figlio"
                 },
                 {
-                    "mattone": "SEImporti"
+                    "mattone": "SEImporti",
+                    "tipo": "figlio"
                 }
             ]
         },
         {
-            "mattone": "BOOfferta"
+            "mattone": "BOOfferta",
+            "tipo": "standalone"
         }
     ],
     "multipod": [
@@ -96,56 +113,70 @@
             "tipo": "contenitore",
             "figli": [
                 {
-                "mattone": "EIInformativiEssenziali"
+                "mattone": "EIInformativiEssenziali",
+                "tipo": "figlio"
                 },
                 {
                     "mattone": "LettureConsumi",
-                    "tipo": "contenitore",
+                    "tipo": "figlio-contenitore",
                     "figli": [
                         {
-                            "mattone": "EIMisure"
+                            "mattone": "EIMisure",
+                            "tipo": "figlio"
                         },
                         {
-                            "mattone": "EIMisureMessaggi"
+                            "mattone": "EIMisureMessaggi",
+                            "tipo": "figlio"
                         }
                     ]
                 },
                 {
-                    "mattone": "EIRicalcoli"
+                    "mattone": "EIRicalcoli",
+                    "tipo": "figlio"
                 },
                 {
-                    "mattone": "EIStoricheBase"
+                    "mattone": "EIStoricheBase",
+                    "tipo": "figlio"
                 },
                 {
-                    "mattone": "EIImposte"
+                    "mattone": "EIImposte",
+                    "tipo": "figlio"
                 },
                 {
-                    "mattone": "EIOneri"
+                    "mattone": "EIOneri",
+                    "tipo": "figlio"
                 }
             ]
         }
     ],
     "postMultipod" : [
         {
-            "mattone": "EIPagamenti"
+            "mattone": "EIPagamenti",
+            "tipo": "standalone"
         },
         {
-            "mattone": "InformazioniConsumatore"
+            "mattone": "InformazioniConsumatore",
+            "tipo": "standalone"
         },
         {
-            "mattone": "StrumentiTrasparenza"
+            "mattone": "StrumentiTrasparenza",
+            "tipo": "standalone"
         },
         {
-            "mattone": "EIMix"
+            "mattone": "EIMix",
+            "tipo": "standalone"
         },
         {
-            "mattone": "EIInfoAutorita"
+            "mattone": "EIInfoAutorita",
+            "tipo": "standalone"
         },
         {
-            "mattone": "ObblighiInformativi"
+            "mattone": "ObblighiInformativi",
+            "tipo": "standalone"
         },
         {
-            "mattone": "Eccepibili"
+            "mattone": "Eccepibili",
+            "tipo": "standalone"
         }
     ]
 }
